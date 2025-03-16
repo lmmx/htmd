@@ -120,8 +120,7 @@ Maintained by [lmmx](https://github.com/lmmx). Contributions welcome!
 ## Credits
 
 - [htmd](https://github.com/letmutex/htmd) - The underlying Rust library
-- Inspired by [comrak](https://github.com/lmmx/comrak) - Python bindings for CommonMark/GFM parser
-  markdown to HTML converter
+- Inspired by [comrak](https://github.com/lmmx/comrak) - Python bindings for Comrak, a fast Markdown to HTML converter.
 
 ## License
 
