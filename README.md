@@ -71,7 +71,7 @@ htmd.HeadingStyle.ATX       # "atx"
 htmd.HeadingStyle.SETEX     # "setex"
 
 # HrStyle
-htmd.HrStyle.DASHES         # "dashes"  
+htmd.HrStyle.DASHES         # "dashes"
 htmd.HrStyle.ASTERISKS      # "asterisks"
 htmd.HrStyle.UNDERSCORES    # "underscores"
 
