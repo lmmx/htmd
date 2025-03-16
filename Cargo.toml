@@ -1,0 +1,29 @@
+[dependencies]
+htmd_lib = {package = "htmd", version = "0.1.6"}
+pyo3 = "0.23.3"
+
+[lib]
+name = "htmd"
+crate-type = ["cdylib"]
+
+[package]
+name = "htmd-py"
+version = "0.1.0"
+edition = "2021"
+description = "Python bindings for htmd, an HTML to Markdown converter."
+
+[profile.dev]
+opt-level = 0
+lto = false
+codegen-units = 256
+panic = "abort"
+debug = false
+strip = "debuginfo"
+
+[profile.release]
+opt-level = 2
+lto = "thin"
+codegen-units = 1
+panic = "abort"
+debug = false
+strip = "symbols"

@@ -1,0 +1,60 @@
+[build-system]
+requires = [
+  "maturin>=1.8,<2.0"
+]
+build-backend = "maturin"
+
+[project]
+name = "htmd-py"
+description = "Python bindings for the htmd Rust library, a fast HTML to Markdown converter"
+classifiers = [
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Rust",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.9"
+]
+authors = [
+  {email = "louismmx@gmail.com", name = "Louis Maddox"}
+]
+keywords = [
+  "html",
+  "markdown",
+  "rust",
+  "commonmark",
+  "parser",
+  "html2md"
+]
+readme = "README.md"
+requires-python = ">=3.9"
+version = "0.1.0"
+
+[project.license]
+file = "LICENSE"
+
+[project.optional-dependencies]
+dev = [
+  "maturin[patchelf]>=1.8.2",
+  "pdm>=2.22.3",
+  "pdm-bump>=0.9.10",
+  "pre-commit>=4.1.0"
+]
+bench = [
+    "markdownify>=1.1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/lmmx/htmd"
+Repository = "https://github.com/lmmx/htmd.git"
+
+[tool.maturin]
+features = [
+  "pyo3/extension-module"
+]

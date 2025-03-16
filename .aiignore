@@ -1,0 +1,9 @@
+.aiignore
+Cargo.lock
+target
+uv.lock
+.git
+.venv
+.ruff_cache
+dist
+LICENSE
