@@ -58,4 +58,3 @@ Repository = "https://github.com/lmmx/htmd.git"
 features = [
   "pyo3/extension-module"
 ]
-
