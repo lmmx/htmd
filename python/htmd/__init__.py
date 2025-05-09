@@ -1,3 +1,5 @@
+# ruff: noqa: F403, F405
+
 from .htmd import *
 
 __doc__ = htmd.__doc__
