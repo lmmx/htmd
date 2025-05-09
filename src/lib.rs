@@ -2,12 +2,14 @@ use pyo3::prelude::*;
 
 use htmd_lib::convert as htmd_convert;
 use htmd_lib::HtmlToMarkdown;
+use pyo3_stub_gen::{define_stub_info_gatherer, derive::gen_stub_pyfunction};
 
 // Import the Python option classes we defined
 mod options;
 use options::PyOptions;
 
 /// Convert an HTML string to Markdown, with optional options.
+#[gen_stub_pyfunction]
 #[pyfunction(signature=(html, options=None))]
 fn convert_html(html: &str, options: Option<PyOptions>) -> PyResult<String> {
     if let Some(py_opts) = options {
@@ -35,6 +37,7 @@ fn convert_html(html: &str, options: Option<PyOptions>) -> PyResult<String> {
 }
 
 /// Create options configured to skip specific HTML tags during conversion.
+#[gen_stub_pyfunction]
 #[pyfunction]
 fn create_options_with_skip_tags(tags: Vec<String>) -> PyResult<PyOptions> {
     let mut options = PyOptions::new();
@@ -103,3 +106,5 @@ fn htmd(m: &Bound<'_, PyModule>) -> PyResult<()> {
 
     Ok(())
 }
+
+define_stub_info_gatherer!(stub_info);

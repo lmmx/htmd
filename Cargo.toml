@@ -1,10 +1,11 @@
 [dependencies]
 htmd_lib = {package = "htmd", version = "0.1.6"}
 pyo3 = "0.23.3"
+pyo3-stub-gen = "0.8.2"
 
 [lib]
 name = "htmd"
-crate-type = ["cdylib"]
+crate-type = ["cdylib", "rlib"]
 
 [package]
 name = "htmd-py"
