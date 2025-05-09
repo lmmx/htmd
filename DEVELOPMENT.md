@@ -10,7 +10,7 @@
 
 ```
 cargo run --bin stub_gen
-mv ./htmd-py.pyi ./htmd.pyi
+mv ./python/htmd-py.pyi ./python/htmd/__init__.pyi
 
 # Manual formatting and fine-tuning
 ```
