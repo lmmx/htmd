@@ -55,6 +55,7 @@ Homepage = "https://github.com/lmmx/htmd"
 Repository = "https://github.com/lmmx/htmd.git"
 
 [tool.maturin]
+python-source = "python"
 features = [
   "pyo3/extension-module"
 ]
