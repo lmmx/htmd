@@ -8,8 +8,10 @@ use htmd_lib::options::{
     Options as HtmdOptions,
 };
 use htmd_lib::HtmlToMarkdownBuilder;
+use pyo3_stub_gen::derive::{gen_stub_pyclass, gen_stub_pymethods};
 
 /// Python class that mirrors htmd's `Options`
+#[gen_stub_pyclass]
 #[pyclass(name = "Options")]
 #[derive(Clone)]
 pub struct PyOptions {
@@ -109,6 +111,7 @@ impl PyOptions {
     }
 }
 
+#[gen_stub_pymethods]
 #[pymethods]
 impl PyOptions {
     #[new]
