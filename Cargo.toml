@@ -1,5 +1,5 @@
 [dependencies]
-htmd_lib = { package = "htmd", version = "0.5" }
+htmd_lib = {package = "htmd", version = "0.5"}
 pyo3 = "0.28"
 
 [lib]
