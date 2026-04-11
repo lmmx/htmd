@@ -10,7 +10,7 @@ use htmd_lib::options::{
 use htmd_lib::HtmlToMarkdownBuilder;
 
 /// Python class that mirrors htmd's `Options`
-#[pyclass(name = "Options")]
+#[pyclass(name = "Options", from_py_object)]
 #[derive(Clone)]
 pub struct PyOptions {
     #[pyo3(get, set)]
@@ -82,6 +82,12 @@ impl PyOptions {
             _ => HtmdBulletListMarker::Asterisk,
         };
 
+        // htmd 0.5 added three fields to `Options` that 0.1 didn't have:
+        // `ul_bullet_spacing`, `ol_number_spacing`, and `translation_mode`.
+        // Seed them from `Options::default()` so the PyOptions surface stays
+        // source-compatible with 0.1's wrapper. A future PR can expose these
+        // to Python if there's a user request.
+        let defaults = HtmdOptions::default();
         HtmdOptions {
             heading_style,
             hr_style,
@@ -91,7 +97,10 @@ impl PyOptions {
             code_block_style,
             code_block_fence,
             bullet_list_marker,
+            ul_bullet_spacing: defaults.ul_bullet_spacing,
+            ol_number_spacing: defaults.ol_number_spacing,
             preformatted_code: self.preformatted_code,
+            translation_mode: defaults.translation_mode,
         }
     }
 
@@ -135,6 +144,12 @@ impl PyOptions {
             link_style: match defaults.link_style {
                 HtmdLinkStyle::Inlined => "inlined".to_string(),
                 HtmdLinkStyle::Referenced => "referenced".to_string(),
+                // Added in htmd 0.5 as an `Inlined` sub-variant that prefers
+                // CommonMark autolinks when the link text equals the href.
+                // Collapsed to "inlined" for wire compatibility with 0.1's
+                // string enum; exposing this as a distinct string is a
+                // follow-up decision, not scope for the dep bump.
+                HtmdLinkStyle::InlinedPreferAutolinks => "inlined".to_string(),
             },
 
             link_reference_style: match defaults.link_reference_style {
