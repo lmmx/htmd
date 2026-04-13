@@ -101,5 +101,23 @@ fn htmd(m: &Bound<'_, PyModule>) -> PyResult<()> {
     bullet_list_marker.setattr("DASH", "dash")?;
     m.setattr("BulletListMarker", bullet_list_marker)?;
 
+    // Enums do not get auto-populated in __all__
+    m.setattr(
+        "__all__",
+        vec![
+            "convert_html",
+            "create_options_with_skip_tags",
+            "Options",
+            "HeadingStyle",
+            "HrStyle",
+            "BrStyle",
+            "LinkStyle",
+            "LinkReferenceStyle",
+            "CodeBlockStyle",
+            "CodeBlockFence",
+            "BulletListMarker",
+        ],
+    )?;
+
     Ok(())
 }

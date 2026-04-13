@@ -11,6 +11,12 @@ name = "htmd-py"
 version = "0.1.0"
 edition = "2021"
 description = "Python bindings for htmd, an HTML to Markdown converter."
+license = "MIT"
+repository = "https://github.com/lmmx/htmd"
+homepage = "https://github.com/lmmx/htmd"
+readme = "README.md"
+keywords = ["html", "markdown", "pyo3", "python"]
+categories = ["text-processing"]
 
 [profile.dev]
 opt-level = 0
