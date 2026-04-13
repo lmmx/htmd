@@ -5,12 +5,12 @@ use htmd_lib::options::{
     CodeBlockFence as HtmdCodeBlockFence, CodeBlockStyle as HtmdCodeBlockStyle,
     HeadingStyle as HtmdHeadingStyle, HrStyle as HtmdHrStyle,
     LinkReferenceStyle as HtmdLinkReferenceStyle, LinkStyle as HtmdLinkStyle,
-    Options as HtmdOptions,
+    Options as HtmdOptions, TranslationMode as HtmdTranslationMode,
 };
 use htmd_lib::HtmlToMarkdownBuilder;
 
 /// Python class that mirrors htmd's `Options`
-#[pyclass(name = "Options")]
+#[pyclass(name = "Options", from_py_object)]
 #[derive(Clone)]
 pub struct PyOptions {
     #[pyo3(get, set)]
@@ -30,7 +30,13 @@ pub struct PyOptions {
     #[pyo3(get, set)]
     pub bullet_list_marker: String,
     #[pyo3(get, set)]
+    pub ul_bullet_spacing: u8,
+    #[pyo3(get, set)]
+    pub ol_number_spacing: u8,
+    #[pyo3(get, set)]
     pub preformatted_code: bool,
+    #[pyo3(get, set)]
+    pub translation_mode: String,
 
     // Special attributes that don't map directly to HtmdOptions
     #[pyo3(get, set)]
@@ -58,6 +64,7 @@ impl PyOptions {
 
         let link_style = match self.link_style.as_str() {
             "referenced" => HtmdLinkStyle::Referenced,
+            "inlined_prefer_autolinks" => HtmdLinkStyle::InlinedPreferAutolinks,
             _ => HtmdLinkStyle::Inlined,
         };
 
@@ -82,6 +89,11 @@ impl PyOptions {
             _ => HtmdBulletListMarker::Asterisk,
         };
 
+        let translation_mode = match self.translation_mode.as_str() {
+            "faithful" => HtmdTranslationMode::Faithful,
+            _ => HtmdTranslationMode::Pure,
+        };
+
         HtmdOptions {
             heading_style,
             hr_style,
@@ -91,7 +103,10 @@ impl PyOptions {
             code_block_style,
             code_block_fence,
             bullet_list_marker,
+            ul_bullet_spacing: self.ul_bullet_spacing,
+            ol_number_spacing: self.ol_number_spacing,
             preformatted_code: self.preformatted_code,
+            translation_mode,
         }
     }
 
@@ -134,6 +149,7 @@ impl PyOptions {
 
             link_style: match defaults.link_style {
                 HtmdLinkStyle::Inlined => "inlined".to_string(),
+                HtmdLinkStyle::InlinedPreferAutolinks => "inlined_prefer_autolinks".to_string(),
                 HtmdLinkStyle::Referenced => "referenced".to_string(),
             },
 
@@ -158,7 +174,15 @@ impl PyOptions {
                 HtmdBulletListMarker::Dash => "dash".to_string(),
             },
 
+            ul_bullet_spacing: defaults.ul_bullet_spacing,
+            ol_number_spacing: defaults.ol_number_spacing,
+
             preformatted_code: defaults.preformatted_code,
+
+            translation_mode: match defaults.translation_mode {
+                HtmdTranslationMode::Pure => "pure".to_string(),
+                HtmdTranslationMode::Faithful => "faithful".to_string(),
+            },
 
             // Special attributes
             skip_tags: Vec::new(),

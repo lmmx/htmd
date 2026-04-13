@@ -1,6 +1,6 @@
 [dependencies]
-htmd_lib = {package = "htmd", version = "0.1.6"}
-pyo3 = "0.23.3"
+htmd_lib = {package = "htmd", version = "0.5.4"}
+pyo3 = "0.28"
 
 [lib]
 name = "htmd"
