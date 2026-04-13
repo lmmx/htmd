@@ -32,7 +32,10 @@ You can customise the HTML to Markdown conversion with the following options:
 - `code_block_style`: Style for code blocks (values from `htmd.CodeBlockStyle`)
 - `code_block_fence`: Fence style for code blocks (values from `htmd.CodeBlockFence`)
 - `bullet_list_marker`: Marker for unordered lists (values from `htmd.BulletListMarker`)
+- `ul_bullet_spacing`: Number of spaces between the bullet character and the content in unordered lists (integer, `u8`)
+- `ol_number_spacing`: Number of spaces between the period and the content in ordered lists (integer, `u8`)
 - `preformatted_code`: Whether to preserve whitespace in inline code (boolean)
+- `translation_mode`: How faithfully to preserve source HTML (values from `htmd.TranslationMode`)
 - `skip_tags`: List of HTML tags to skip during conversion (list of strings)
 
 All options are exposed in a simple manner:
@@ -57,7 +60,7 @@ markdown = htmd.convert_html("<h1>Hello</h1><script>alert('Hi');</script>", opti
 print(markdown)  # "# Hello" (script tag is skipped)
 ```
 
-Refer to the [htmd docs](https://docs.rs/htmd-py/latest/htmd-py/struct.Options.html) for all available options.
+Refer to the [htmd docs](https://docs.rs/htmd/latest/htmd/options/struct.Options.html) for all available options.
 
 ### Available Constants
 
@@ -80,8 +83,9 @@ htmd.BrStyle.TWO_SPACES     # "two_spaces"
 htmd.BrStyle.BACKSLASH      # "backslash"
 
 # LinkStyle
-htmd.LinkStyle.INLINED      # "inlined"
-htmd.LinkStyle.REFERENCED   # "referenced"
+htmd.LinkStyle.INLINED                   # "inlined"
+htmd.LinkStyle.INLINED_PREFER_AUTOLINKS  # "inlined_prefer_autolinks"
+htmd.LinkStyle.REFERENCED                # "referenced"
 
 # LinkReferenceStyle
 htmd.LinkReferenceStyle.FULL       # "full"
@@ -99,7 +103,13 @@ htmd.CodeBlockFence.BACKTICKS # "backticks"
 # BulletListMarker
 htmd.BulletListMarker.ASTERISK  # "asterisk"
 htmd.BulletListMarker.DASH      # "dash"
+
+# TranslationMode
+htmd.TranslationMode.PURE       # "pure"
+htmd.TranslationMode.FAITHFUL   # "faithful"
 ```
+
+`ul_bullet_spacing` and `ol_number_spacing` are plain integers rather than enum-like constants — any value in the `u8` range (0–255) is valid.
 
 ## Benchmarks
 

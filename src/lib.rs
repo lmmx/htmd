@@ -73,6 +73,7 @@ fn htmd(m: &Bound<'_, PyModule>) -> PyResult<()> {
     // Add enum constants for LinkStyle
     let link_style = PyModule::new(m.py(), "LinkStyle")?;
     link_style.setattr("INLINED", "inlined")?;
+    link_style.setattr("INLINED_PREFER_AUTOLINKS", "inlined_prefer_autolinks")?;
     link_style.setattr("REFERENCED", "referenced")?;
     m.setattr("LinkStyle", link_style)?;
 
@@ -101,6 +102,12 @@ fn htmd(m: &Bound<'_, PyModule>) -> PyResult<()> {
     bullet_list_marker.setattr("DASH", "dash")?;
     m.setattr("BulletListMarker", bullet_list_marker)?;
 
+    // Add enum constants for TranslationMode
+    let translation_mode = PyModule::new(m.py(), "TranslationMode")?;
+    translation_mode.setattr("PURE", "pure")?;
+    translation_mode.setattr("FAITHFUL", "faithful")?;
+    m.setattr("TranslationMode", translation_mode)?;
+
     // Enums do not get auto-populated in __all__
     m.setattr(
         "__all__",
@@ -116,6 +123,7 @@ fn htmd(m: &Bound<'_, PyModule>) -> PyResult<()> {
             "CodeBlockStyle",
             "CodeBlockFence",
             "BulletListMarker",
+            "TranslationMode",
         ],
     )?;
 
