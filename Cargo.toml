@@ -8,7 +8,7 @@ crate-type = ["cdylib"]
 
 [package]
 name = "htmd-py"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 description = "Python bindings for htmd, an HTML to Markdown converter."
 license = "MIT"
