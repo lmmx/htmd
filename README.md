@@ -2,7 +2,6 @@
 
 <!-- [![downloads](https://static.pepy.tech/badge/htmd-py/month)](https://pepy.tech/project/htmd-py) -->
 [![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
-[![pdm-managed](https://img.shields.io/badge/pdm-managed-blueviolet)](https://pdm.fming.dev)
 [![PyPI](https://img.shields.io/pypi/v/htmd-py.svg)](https://pypi.org/project/htmd-py)
 [![Supported Python versions](https://img.shields.io/pypi/pyversions/htmd-py.svg)](https://pypi.org/project/htmd-py)
 [![License](https://img.shields.io/pypi/l/htmd-py.svg)](https://pypi.python.org/pypi/htmd-py)
