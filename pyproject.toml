@@ -4,6 +4,11 @@ requires = [
 ]
 build-backend = "maturin"
 
+[dependency-groups]
+test = [
+  "pytest>=8.4.2"
+]
+
 [project]
 name = "htmd-py"
 description = "Python bindings for the htmd Rust library, a fast HTML to Markdown converter"
@@ -59,3 +64,6 @@ Repository = "https://github.com/lmmx/htmd.git"
 features = [
   "pyo3/extension-module"
 ]
+
+[tool.uv]
+default-groups = "all"
