@@ -36,11 +36,11 @@ You can customise the HTML to Markdown conversion with the following options:
 - `preformatted_code`: Whether to preserve whitespace in inline code (boolean)
 - `translation_mode`: How faithfully to preserve source HTML (values from `htmd.TranslationMode`)
 - `skip_tags`: List of HTML tags to skip during conversion (list of strings)
-- `image_placeholder`<sup>†</sup>: Optional template string for `<img>` elements; `{alt}` is substituted for the alt attribute (`Optional[str]`)
-- `drop_empty_alt_images`<sup>†</sup>: Drop `<img>` with empty or missing alt (boolean)
-- `drop_image_only_links`<sup>†</sup>: Unwrap `<a>` whose only element child is an `<img>` (boolean)
+- <sup>†</sup>`image_placeholder`: Optional template string for `<img>` elements; `{alt}` is substituted for the alt attribute (`Optional[str]`)
+- <sup>†</sup>`drop_empty_alt_images`: Drop `<img>` with empty or missing alt (boolean)
+- <sup>†</sup>`drop_image_only_links`: Unwrap `<a>` whose only element child is an `<img>` (boolean)
 
- <sup>†</sup> These options are in htmd-py, not part of the htmd crate's `Options`.
+ <sup>†</sup> _These options are in htmd-py, not part of the htmd crate's `Options`._
 
 All options are exposed in a simple manner:
 
