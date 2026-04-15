@@ -110,6 +110,28 @@ htmd.TranslationMode.FAITHFUL   # "faithful"
 
 `ul_bullet_spacing` and `ol_number_spacing` are plain integers rather than enum-like constants — any value in the `u8` range (0–255) is valid.
 
+### Text-only handler options
+
+Three additional options on `Options` for plain-text-style markdown
+(useful for data ingestion pipelines):
+
+- `image_placeholder`: Optional template string for `<img>` elements.
+  `{alt}` is substituted for the alt attribute (`Optional[str]`)
+- `drop_empty_alt_images`: Drop `<img>` with empty or missing alt (boolean)
+- `drop_image_only_links`: Unwrap `<a>` whose only element child is an
+  `<img>` (boolean)
+
+```python
+import htmd
+
+opts = htmd.Options()
+opts.image_placeholder = "[Image: {alt}]"
+opts.drop_empty_alt_images = True
+opts.drop_image_only_links = True
+markdown = htmd.convert_html('<a href="..."><img alt="logo"></a>', opts)
+print(markdown)  # "[Image: logo]"
+```
+
 ## Benchmarks
 
 Tested with small (12 lines) and medium (1000 lines) markdown strings

@@ -48,6 +48,7 @@ name = "htmd-py"
 version = "0.1.1"
 dependencies = [
  "htmd",
+ "markup5ever_rcdom",
  "pyo3",
 ]
 
