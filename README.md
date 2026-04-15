@@ -36,6 +36,11 @@ You can customise the HTML to Markdown conversion with the following options:
 - `preformatted_code`: Whether to preserve whitespace in inline code (boolean)
 - `translation_mode`: How faithfully to preserve source HTML (values from `htmd.TranslationMode`)
 - `skip_tags`: List of HTML tags to skip during conversion (list of strings)
+- `image_placeholder`<sup>†</sup>: Optional template string for `<img>` elements; `{alt}` is substituted for the alt attribute (`Optional[str]`)
+- `drop_empty_alt_images`<sup>†</sup>: Drop `<img>` with empty or missing alt (boolean)
+- `drop_image_only_links`<sup>†</sup>: Unwrap `<a>` whose only element child is an `<img>` (boolean)
+
+ <sup>†</sup> These options are in htmd-py, not part of the htmd crate's `Options`.
 
 All options are exposed in a simple manner:
 
@@ -109,28 +114,6 @@ htmd.TranslationMode.FAITHFUL   # "faithful"
 ```
 
 `ul_bullet_spacing` and `ol_number_spacing` are plain integers rather than enum-like constants — any value in the `u8` range (0–255) is valid.
-
-### Text-only handler options
-
-Three additional options on `Options` for plain-text-style markdown
-(useful for data ingestion pipelines):
-
-- `image_placeholder`: Optional template string for `<img>` elements.
-  `{alt}` is substituted for the alt attribute (`Optional[str]`)
-- `drop_empty_alt_images`: Drop `<img>` with empty or missing alt (boolean)
-- `drop_image_only_links`: Unwrap `<a>` whose only element child is an
-  `<img>` (boolean)
-
-```python
-import htmd
-
-opts = htmd.Options()
-opts.image_placeholder = "[Image: {alt}]"
-opts.drop_empty_alt_images = True
-opts.drop_image_only_links = True
-markdown = htmd.convert_html('<a href="..."><img alt="logo"></a>', opts)
-print(markdown)  # "[Image: logo]"
-```
 
 ## Benchmarks
 
