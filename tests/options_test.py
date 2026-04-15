@@ -17,6 +17,9 @@ EXPECTED_DEFAULTS = {
     "ol_number_spacing": 2,
     "preformatted_code": False,
     "translation_mode": "pure",
+    "image_placeholder": None,
+    "drop_empty_alt_images": False,
+    "drop_image_only_links": False,
 }
 
 
@@ -50,6 +53,10 @@ def test_default_skip_tags_empty(opts):
         ("ol_number_spacing", 3),
         ("preformatted_code", True),
         ("skip_tags", ["script", "style"]),
+        ("image_placeholder", "[Image: {alt}]"),
+        ("image_placeholder", None),
+        ("drop_empty_alt_images", True),
+        ("drop_image_only_links", True),
     ],
 )
 def test_attribute_roundtrip(opts, attr, value):

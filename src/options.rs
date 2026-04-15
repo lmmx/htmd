@@ -1,5 +1,8 @@
+use std::rc::Rc;
+
 use pyo3::prelude::*;
 
+use htmd_lib::element_handler::{HandlerResult, Handlers};
 use htmd_lib::options::{
     BrStyle as HtmdBrStyle, BulletListMarker as HtmdBulletListMarker,
     CodeBlockFence as HtmdCodeBlockFence, CodeBlockStyle as HtmdCodeBlockStyle,
@@ -7,7 +10,36 @@ use htmd_lib::options::{
     LinkReferenceStyle as HtmdLinkReferenceStyle, LinkStyle as HtmdLinkStyle,
     Options as HtmdOptions, TranslationMode as HtmdTranslationMode,
 };
-use htmd_lib::HtmlToMarkdownBuilder;
+use htmd_lib::{Element, HtmlToMarkdownBuilder};
+use markup5ever_rcdom::{Node, NodeData};
+
+/// True if `node`'s direct children are exactly one `<img>` element, with
+/// any other children being whitespace-only text nodes. Comments, doctype,
+/// and processing instructions are ignored.
+fn is_image_only_anchor(node: &Rc<Node>) -> bool {
+    let children = node.children.borrow();
+    let mut saw_image = false;
+    for child in children.iter() {
+        match &child.data {
+            NodeData::Text { contents } => {
+                if !contents.borrow().chars().all(char::is_whitespace) {
+                    return false;
+                }
+            }
+            NodeData::Element { name, .. } => {
+                if &*name.local != "img" {
+                    return false;
+                }
+                if saw_image {
+                    return false;
+                }
+                saw_image = true;
+            }
+            _ => {}
+        }
+    }
+    saw_image
+}
 
 /// Python class that mirrors htmd's `Options`
 #[pyclass(name = "Options", from_py_object)]
@@ -41,6 +73,25 @@ pub struct PyOptions {
     // Special attributes that don't map directly to HtmdOptions
     #[pyo3(get, set)]
     pub skip_tags: Vec<String>,
+
+    /// Custom image replacement template. When set, `<img>` elements are
+    /// replaced with this string, with `{alt}` substituted for the alt
+    /// attribute's value. When `None`, htmd's default `![alt](src)`
+    /// rendering is used.
+    #[pyo3(get, set)]
+    pub image_placeholder: Option<String>,
+
+    /// When true, `<img>` elements whose alt attribute is empty or missing
+    /// are dropped from the output. Composes with `image_placeholder`:
+    /// non-empty alts use the template, empty alts are dropped.
+    #[pyo3(get, set)]
+    pub drop_empty_alt_images: bool,
+
+    /// When true, `<a>` elements whose only element child is an `<img>`
+    /// (with optional whitespace-only text siblings) are unwrapped: the
+    /// inner image render is emitted without the surrounding link.
+    #[pyo3(get, set)]
+    pub drop_image_only_links: bool,
 }
 
 impl PyOptions {
@@ -120,6 +171,51 @@ impl PyOptions {
             builder = builder.skip_tags(skip_tags);
         }
 
+        // Install custom <img> handler if image_placeholder or drop_empty_alt_images is set.
+        let wants_img_handler =
+            self.image_placeholder.is_some() || self.drop_empty_alt_images;
+        if wants_img_handler {
+            let template = self.image_placeholder.clone();
+            let drop_empty = self.drop_empty_alt_images;
+            builder = builder.add_handler(
+                vec!["img"],
+                move |handlers: &dyn Handlers, element: Element| -> Option<HandlerResult> {
+                    let alt = element
+                        .attrs
+                        .iter()
+                        .find(|a| &*a.name.local == "alt")
+                        .map(|a| a.value.to_string())
+                        .unwrap_or_default();
+                    let alt_trimmed = alt.trim();
+
+                    if alt_trimmed.is_empty() && drop_empty {
+                        return Some(HandlerResult::from(String::new()));
+                    }
+
+                    if let Some(ref t) = template {
+                        let replaced = t.replace("{alt}", alt_trimmed);
+                        return Some(HandlerResult::from(replaced));
+                    }
+
+                    handlers.fallback(element)
+                },
+            );
+        }
+
+        // Install custom <a> handler that unwraps image-only links.
+        if self.drop_image_only_links {
+            builder = builder.add_handler(
+                vec!["a"],
+                move |handlers: &dyn Handlers, element: Element| -> Option<HandlerResult> {
+                    if is_image_only_anchor(element.node) {
+                        let inner = handlers.walk_children(element.node);
+                        return Some(HandlerResult::from(inner.content));
+                    }
+                    handlers.fallback(element)
+                },
+            );
+        }
+
         builder
     }
 }
@@ -186,6 +282,11 @@ impl PyOptions {
 
             // Special attributes
             skip_tags: Vec::new(),
+
+            // Text-only handler options
+            image_placeholder: None,
+            drop_empty_alt_images: false,
+            drop_image_only_links: false,
         }
     }
 }

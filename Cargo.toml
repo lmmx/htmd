@@ -1,5 +1,6 @@
 [dependencies]
 htmd_lib = {package = "htmd", version = "0.5.4"}
+markup5ever_rcdom = "0.38.0"
 pyo3 = "0.28"
 
 [lib]
