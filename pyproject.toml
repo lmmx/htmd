@@ -5,6 +5,9 @@ requires = [
 build-backend = "maturin"
 
 [dependency-groups]
+dev = [
+  "maturin[patchelf]>=1.8.2",
+]
 test = [
   "pytest>=8.4.2"
 ]
@@ -46,9 +49,6 @@ version = "0.1.2"
 file = "LICENSE"
 
 [project.optional-dependencies]
-dev = [
-  "maturin[patchelf]>=1.8.2",
-]
 bench = [
   "markdownify>=1.1.0"
 ]
