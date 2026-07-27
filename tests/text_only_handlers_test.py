@@ -9,7 +9,6 @@ DOM-based detection over rendered-output prefix matching.
 
 import htmd
 
-
 # --- image_placeholder ------------------------------------------------------
 
 

@@ -1,8 +1,8 @@
 # tests/test_constants.py
 """Enum constants and module surface."""
 
-import pytest
 import htmd
+import pytest
 
 EXPECTED_CONSTANTS = {
     "HeadingStyle": {"ATX": "atx", "SETEX": "setex"},
