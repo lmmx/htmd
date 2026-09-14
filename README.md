@@ -74,43 +74,43 @@ The module provides enumeration-like objects for all option values:
 import htmd
 
 # HeadingStyle
-htmd.HeadingStyle.ATX       # "atx"
-htmd.HeadingStyle.SETEX     # "setex"
+htmd.HeadingStyle.ATX  # "atx"
+htmd.HeadingStyle.SETEX  # "setex"
 
 # HrStyle
-htmd.HrStyle.DASHES         # "dashes"
-htmd.HrStyle.ASTERISKS      # "asterisks"
-htmd.HrStyle.UNDERSCORES    # "underscores"
+htmd.HrStyle.DASHES  # "dashes"
+htmd.HrStyle.ASTERISKS  # "asterisks"
+htmd.HrStyle.UNDERSCORES  # "underscores"
 
 # BrStyle
-htmd.BrStyle.TWO_SPACES     # "two_spaces"
-htmd.BrStyle.BACKSLASH      # "backslash"
+htmd.BrStyle.TWO_SPACES  # "two_spaces"
+htmd.BrStyle.BACKSLASH  # "backslash"
 
 # LinkStyle
-htmd.LinkStyle.INLINED                   # "inlined"
+htmd.LinkStyle.INLINED  # "inlined"
 htmd.LinkStyle.INLINED_PREFER_AUTOLINKS  # "inlined_prefer_autolinks"
-htmd.LinkStyle.REFERENCED                # "referenced"
+htmd.LinkStyle.REFERENCED  # "referenced"
 
 # LinkReferenceStyle
-htmd.LinkReferenceStyle.FULL       # "full"
+htmd.LinkReferenceStyle.FULL  # "full"
 htmd.LinkReferenceStyle.COLLAPSED  # "collapsed"
-htmd.LinkReferenceStyle.SHORTCUT   # "shortcut"
+htmd.LinkReferenceStyle.SHORTCUT  # "shortcut"
 
 # CodeBlockStyle
 htmd.CodeBlockStyle.INDENTED  # "indented"
-htmd.CodeBlockStyle.FENCED    # "fenced"
+htmd.CodeBlockStyle.FENCED  # "fenced"
 
 # CodeBlockFence
-htmd.CodeBlockFence.TILDES    # "tildes"
-htmd.CodeBlockFence.BACKTICKS # "backticks"
+htmd.CodeBlockFence.TILDES  # "tildes"
+htmd.CodeBlockFence.BACKTICKS  # "backticks"
 
 # BulletListMarker
 htmd.BulletListMarker.ASTERISK  # "asterisk"
-htmd.BulletListMarker.DASH      # "dash"
+htmd.BulletListMarker.DASH  # "dash"
 
 # TranslationMode
-htmd.TranslationMode.PURE       # "pure"
-htmd.TranslationMode.FAITHFUL   # "faithful"
+htmd.TranslationMode.PURE  # "pure"
+htmd.TranslationMode.FAITHFUL  # "faithful"
 ```
 
 `ul_bullet_spacing` and `ol_number_spacing` are plain integers rather than enum-like constants — any value in the `u8` range (0–255) is valid.
