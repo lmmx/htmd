@@ -31,7 +31,7 @@ classifiers = [
   "Programming Language :: Python :: 3.9"
 ]
 authors = [
-  {email = "louismmx@gmail.com", name = "Louis Maddox"}
+  { email = "louismmx@gmail.com", name = "Louis Maddox" }
 ]
 keywords = [
   "html",
